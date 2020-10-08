@@ -3,6 +3,7 @@ export const actions = {
 
     updateHeight: 'UPDATE_HEIGHT',
 
+    setFontSize: 'fontSize',
     setBold: 'bold',
     setItalic: 'italic',
     setUnderline: 'underline',

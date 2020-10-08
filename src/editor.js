@@ -61,6 +61,13 @@ function createHTML(options = {}) {
             return document.execCommand(command, false, value);
         };
 
+        var execFontSize = function execFontSize(value) {
+            document.execCommand("styleWithCSS", null, true);
+            document.execCommand('fontsize', true, value + 'px');
+            
+            return document.execCommand("styleWithCSS", null, false);
+        }
+
         var postAction = function(data){
             editor.content.contentEditable === 'true' && exports.window.postMessage(JSON.stringify(data));
         };
@@ -103,6 +110,10 @@ function createHTML(options = {}) {
             italic: { state: function() { return queryCommandState('italic'); }, result: function() { return exec('italic'); }},
             underline: { state: function() { return queryCommandState('underline'); }, result: function() { return exec('underline'); }},
             strikeThrough: { state: function() { return queryCommandState('strikeThrough'); }, result: function() { return exec('strikeThrough'); }},
+            justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
+            justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
+            alignRight: { state: function() { return queryCommandState('alignRight'); }, result: function() { return exec('alignRight'); }},
+            fontSize: { result: function() { return execFontSize(12); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
             heading3: { result: function() { return exec(formatBlock, '<h3>'); }},
