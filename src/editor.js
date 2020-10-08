@@ -32,6 +32,7 @@ function createHTML(options = {}) {
 </head>
 <body>
 <div class="content"><div id="editor" class="pell"></div></div>
+
 <script>
     var placeholderColor = '${placeholderColor}';
     var __DEV__ = !!${window.__DEV__};
@@ -63,8 +64,8 @@ function createHTML(options = {}) {
 
         var execFontSize = function execFontSize(value) {
             document.execCommand("styleWithCSS", null, true);
-            document.execCommand('fontsize', true, value + 'px');
-            
+            document.execCommand('fontsize', true, 1);
+            document.querySelector('[style*="font-size: x-small"]').style.fontSize = value + 'px';
             return document.execCommand("styleWithCSS", null, false);
         }
 
@@ -113,7 +114,7 @@ function createHTML(options = {}) {
             justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
             justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
             alignRight: { state: function() { return queryCommandState('alignRight'); }, result: function() { return exec('alignRight'); }},
-            fontSize: { result: function() { return execFontSize(12); }},
+            fontSize: { result: function(size) { return execFontSize(size); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
             heading3: { result: function() { return exec(formatBlock, '<h3>'); }},

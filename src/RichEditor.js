@@ -287,6 +287,10 @@ export default class RichTextEditor extends Component {
         }
     }
 
+    setFontSize(size) {
+        this._sendAction(actions.setFontSize, 'result', size);
+    }
+
     init() {
         let that = this;
         const {initialFocus, initialContentHTML, placeholder, editorInitializedCallback, disabled} = that.props;
