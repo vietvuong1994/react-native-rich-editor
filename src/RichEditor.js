@@ -147,7 +147,6 @@ export default class RichTextEditor extends Component {
     };
 
     _sendAction(type, action, data) {
-        console.log({type, action, data})
         let jsonString = JSON.stringify({type, name: action, data});
         if (this.webviewBridge) {
             this.webviewBridge.postMessage(jsonString);
@@ -290,6 +289,19 @@ export default class RichTextEditor extends Component {
     setFontSize(size) {
         this._sendAction(actions.setFontSize, 'result', size);
     }
+
+    setAlignLeft() {
+        this._sendAction(actions.alignLeft, 'result');
+    }
+
+    setAlignCenter() {
+        this._sendAction(actions.alignCenter, 'result');
+    }
+
+    setAlignRight() {
+        this._sendAction(actions.alignRight, 'result');
+    }
+
 
     init() {
         let that = this;
