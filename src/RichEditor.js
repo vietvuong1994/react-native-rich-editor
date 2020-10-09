@@ -207,7 +207,7 @@ export default class RichTextEditor extends Component {
 
         if (useContainer) {
             return (
-                <View style={[style, {height: height || Dimensions.get('window').height * 0.7}]}>
+                <View style={[{height: height || Dimensions.get('window').height * 0.7}, style]}>
                     {this.renderWebView()}
                 </View>
             );
@@ -301,7 +301,6 @@ export default class RichTextEditor extends Component {
     setAlignRight() {
         this._sendAction(actions.alignRight, 'result');
     }
-
 
     init() {
         let that = this;
