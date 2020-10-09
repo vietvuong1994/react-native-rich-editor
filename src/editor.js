@@ -113,7 +113,7 @@ function createHTML(options = {}) {
             strikeThrough: { state: function() { return queryCommandState('strikeThrough'); }, result: function() { return exec('strikeThrough'); }},
             justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
             justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
-            alignRight: { state: function() { return queryCommandState('alignRight'); }, result: function() { return exec('alignRight'); }},
+            justifyRight: { state: function() { return queryCommandState('justifyRight'); }, result: function() { return exec('justifyRight'); }},
             fontSize: { result: function(size) { return execFontSize(size); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
