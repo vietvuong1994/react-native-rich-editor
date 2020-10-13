@@ -73,6 +73,37 @@ function createHTML(options = {}) {
             editor.content.contentEditable === 'true' && exports.window.postMessage(JSON.stringify(data));
         };
 
+        var getComputedStyleProperty = function(el, propName) {
+            if (window.getComputedStyle) {
+                return window.getComputedStyle(el, null)[propName];
+            } else if (el.currentStyle) {
+                return el.currentStyle[propName];
+            }
+        };
+
+        var getFontSize = function() {
+            var containerEl, sel;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.rangeCount) {
+                    containerEl = sel.getRangeAt(0).commonAncestorContainer;
+                    // Make sure we have an element rather than a text node
+                    if (containerEl.nodeType == 3) {
+                        containerEl = containerEl.parentNode;
+                    }
+                }
+            } else if ( (sel = document.selection) && sel.type != "Control") {
+                containerEl = sel.createRange().parentElement();
+            }
+            
+            if (containerEl) {
+                var fontSize = getComputedStyleProperty(containerEl, "fontSize");
+                return "fontSize:" + fontSize;
+            }else{
+                return "fontSize:16px"
+            }
+        }
+
         console.log = function (){
             __DEV__ && postAction({type: 'LOG', data: Array.prototype.slice.call(arguments)});
         }
@@ -114,7 +145,7 @@ function createHTML(options = {}) {
             justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
             justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
             justifyRight: { state: function() { return queryCommandState('justifyRight'); }, result: function() { return exec('justifyRight'); }},
-            fontSize: { result: function(size) { return execFontSize(size); }},
+            fontSize: {  state: function() { return getFontSize(); }, result: function(size) { return execFontSize(size); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
             heading3: { result: function() { return exec(formatBlock, '<h3>'); }},
@@ -244,7 +275,11 @@ function createHTML(options = {}) {
                 var activeTools = [];
                 for(var k in actionsHandler){
                     if ( Actions[k].state() ){
-                        activeTools.push(k);
+                        if ( Actions[k].state() == true ){
+                            activeTools.push(k);
+                        } else {
+                            activeTools.push(Actions[k].state());
+                        }
                     }
                 }
                 postAction({type: 'SELECTION_CHANGE', data: activeTools});
