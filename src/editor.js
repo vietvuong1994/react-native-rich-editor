@@ -14,7 +14,7 @@ function createHTML(options = {}) {
     <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
     <style>
         * {outline: 0px solid transparent;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-touch-callout: none;}
-        html, body { margin: 0; padding: 0;font-family: Arial, Helvetica, sans-serif; font-size:1em;}
+        html, body { margin: 0; padding: 0;font-family: Arial, Helvetica, sans-serif; font-size:16px;}
         body { overflow-y: hidden; -webkit-overflow-scrolling: touch;height: 100%;background-color: ${backgroundColor};}
         img {max-width: 98%;margin-left:auto;margin-right:auto;display: block;}
         video {max-width: 98%;margin-left:auto;margin-right:auto;display: block;}
@@ -65,7 +65,11 @@ function createHTML(options = {}) {
         var execFontSize = function execFontSize(value) {
             document.execCommand("styleWithCSS", null, true);
             document.execCommand('fontsize', true, 1);
-            document.querySelector('[style*="font-size: x-small"]').style.fontSize = value + 'px';
+            var query = document.querySelector('[style*="font-size: x-small"]');
+            console.log("execFontSize: ", {query})
+            if(query != null){
+                query.style.fontSize = value + 'px';
+            }
             return document.execCommand("styleWithCSS", null, false);
         }
 
@@ -145,7 +149,7 @@ function createHTML(options = {}) {
             justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
             justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
             justifyRight: { state: function() { return queryCommandState('justifyRight'); }, result: function() { return exec('justifyRight'); }},
-            fontSize: {  state: function() { return getFontSize(); }, result: function(size) { return execFontSize(size); }},
+            // fontSize: {  state: function() { return getFontSize(); }, result: function(size) { return execFontSize(size); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
             heading3: { result: function() { return exec(formatBlock, '<h3>'); }},

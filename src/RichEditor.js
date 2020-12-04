@@ -287,6 +287,7 @@ export default class RichTextEditor extends Component {
     }
 
     setFontSize(size) {
+        console.log("RichEditor.js: ", {size});
         this._sendAction(actions.setFontSize, 'result', size);
     }
 
@@ -301,6 +302,34 @@ export default class RichTextEditor extends Component {
     setAlignRight() {
         this._sendAction(actions.alignRight, 'result');
     }
+    //set heading
+    setHeading1(){
+        this._sendAction(actions.heading1,'result')
+    }
+    setHeading2(){
+        this._sendAction(actions.heading2,'result')
+    }
+    setHeading3(){
+        this._sendAction(actions.heading3,'result')
+    }
+    setHeading4(){
+        this._sendAction(actions.heading4,'result')
+    }
+    setHeading5(){
+        this._sendAction(actions.heading5,'result')
+    }
+    setHeading6(){
+        this._sendAction(actions.heading6,'result')
+    }
+    setParagraph(){
+        this._sendAction(actions.setParagraph,'result')
+    }
+
+
+
+
+
+
 
     init() {
         let that = this;
